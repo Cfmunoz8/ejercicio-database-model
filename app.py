@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///starwars.db"
 db.init_app(app)
     
-
+#funciones para agregar una fila
 def add_user():
     user = User()
     user.name = "Camila"
@@ -53,12 +53,62 @@ def add_vehicle():
     db.session.add(vehicle)
     db.session.commit()
 
+#funciones update
+
+def update_user(id):
+    user = User.query.get(id)
+    user.password = "C123M456"
+
+    db.session.commit()
+
+def update_favorite(id):
+    favorite = Favorite.query.get(id)
+    favorite.name = "Darth Vader"
+
+    db.session.commit()
+
+def update_character(id):
+    character = Character.query.get(id)
+    character.hair_color = "light brown"
+
+    db.session.commit()
+
+def update_planet(id):
+    planet = Planet.query.get(id)
+    planet.population = 100000
+
+    db.session.commit()
+
+def update_vehicle(id):
+    vehicle = Vehicle.query.get(id)
+    vehicle.crew = 2
+
+    db.session.commit()
+
+#funciones select
+
+
+
+
+#funciones delete
+
 
 with app.app_context():
-    db.create_all()
+    #db.create_all()
     #add_user()
     #add_favorite()
     #add_character()
+    #add_planet()
+    #add_vehicle()
+    #update_user(1)
+    #update_favorite(1)
+    #update_character(1)
+    #update_planet(1)
+    #update_vehicle(1)
+
+
+
+
 
 
 app.run(host="localhost", port=8080)
