@@ -14,16 +14,16 @@ class Favorite(db.Model):
     __tablename__ = "favorites"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) 
 
 class Character(db.Model):
     __tablename__ = "characters"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
-    homeworld = db.Column(db.String(100))
-    vehicle = db.Column(db.String(100))
-    planet = db.relationship("Planet")
-    vehicle = db.relationship("Vehicle")
+    hair_color = db.Column(db.String(100))
+    birth_year = db.Column(db.String(100))
+    planet = db.relationship("Planet", back_populates="character", uselist=False)
+    vehicle = db.relationship("Vehicle", back_populates="character", uselist=False)
 
 class Planet(db.Model):
     __tablename__ = "planets"
@@ -31,6 +31,7 @@ class Planet(db.Model):
     name = db.Column(db.String(100))
     population = db.Column(db.Integer)
     character_id = db.Column (db.Integer, db.ForeignKey("characters.id"))
+    character = db.relationship("Character", back_populates="planet")
 
 class Vehicle(db.Model):
     __tablename__ = "vehicles"
@@ -38,3 +39,4 @@ class Vehicle(db.Model):
     name = db.Column(db.String(100))
     crew = db.Column(db.Integer)
     character_id = db.Column(db.Integer, db.ForeignKey("characters.id"))
+    character = db.relationship("Character", back_populates="vehicle")
